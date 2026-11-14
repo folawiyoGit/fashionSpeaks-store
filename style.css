@@ -1,0 +1,76 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+:root {
+    --espresso: #2b1d14;   /* dark: header, footer, hero overlay */
+    --brown:    #8b6b4a;   /* accents, hover */
+    --beige:    #d9c8b0;   /* borders, soft backgrounds */
+    --cream:    #f5efe6;   /* page background */
+}
+
+body {
+    background: var(--cream);
+    color: var(--espresso);
+    font-family: "Lato", sans-serif;
+}
+
+h1, h2, h3 {
+    font-family: "Playfair Display", serif;
+}
+.hero {
+    position: relative;
+    height: 90vh;
+    background:
+        linear-gradient(rgba(43, 29, 20, 0.55), rgba(43, 29, 20, 0.55)),
+        url("images/hero.jpg") center / cover;
+    background-color: var(--espresso);
+    color: var(--cream);
+    display: flex;
+    align-items: flex-end;
+    padding: 60px;
+}
+
+.hero-btn {
+    display: inline-block;
+    padding: 12px 28px;
+    border: 1px solid var(--cream);
+    color: var(--cream);
+    text-decoration: none;
+    transition: background 0.3s, color 0.3s;
+}
+.hero-tag {
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-size: 0.85rem;
+    margin-bottom: 12px;
+}
+
+.hero h1 {
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    margin-bottom: 24px;
+}
+
+.hero-btn:hover {
+    background: var(--cream);
+    color: var(--espresso);
+}
+
+.welcome {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    opacity: 1;
+    transition: opacity 1.5s ease;   /* the fade lasts 1.5 seconds */
+}
+
+.welcome.fade-out {
+    opacity: 0;
+}
+
+.welcome.gone {
+    display: none;
+}
