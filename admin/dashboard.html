@@ -1,16 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../index.html">
     <link rel="stylesheet" href="../style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
-    <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../favicon-180.png">
-    <title>Document</title>
+    <link rel="stylesheet" href="./admin.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Lato:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32.png">
+    <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../images/favicon-180.png">
+    <title>Dashboard | FashionSpeaks</title>
 </head>
+
 <body>
-    
+    <div class="admin-layout">
+
+        <!-- LEFT SIDEBAR -->
+        <aside class="sidebar">
+            <a href="../index.html" class="sidebar-brand">
+                <img src="../images/fs-logo-transparent.png" alt="FashionSpeaks logo">
+                <span>FashionSpeaks</span>
+            </a>
+
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="active">Dashboard</a>
+                <a href="product.html">Products</a>
+                <a href="../index.html">View store</a>
+            </nav>
+
+            <button class="logout-btn" id="logoutBtn">Log out</button>
+        </aside>
+
+        <!-- MAIN AREA -->
+        <main class="admin-main">
+
+            <header class="admin-top">
+                <div>
+                    <h1>Dashboard</h1>
+                    <p id="welcomeText">Welcome back.</p>
+                </div>
+                <a href="product.html" class="primary-btn">Add product</a>
+            </header>
+
+            <!-- STAT CARDS: JS will replace the 0s with real numbers -->
+            <section class="stat-grid">
+                <article class="stat-card">
+                    <p class="stat-label">Total products</p>
+                    <p class="stat-value" id="totalProducts">0</p>
+                </article>
+
+                <article class="stat-card">
+                    <p class="stat-label">Total stock</p>
+                    <p class="stat-value" id="totalStock">0</p>
+                </article>
+
+                <article class="stat-card">
+                    <p class="stat-label">Low stock items</p>
+                    <p class="stat-value" id="lowStockCount">0</p>
+                </article>
+
+                <article class="stat-card">
+                    <p class="stat-label">Categories</p>
+                    <p class="stat-value" id="categoryCount">0</p>
+                </article>
+            </section>
+
+            <!-- LOW STOCK TABLE -->
+            <section class="panel">
+                <div class="panel-head">
+                    <h2>Low stock</h2>
+                    <a href="product.html">Manage products</a>
+                </div>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Category</th>
+                                <th>In stock</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lowStockBody">
+                            <tr class="empty-row">
+                                <td colspan="4">No products yet. Add your first product to see it here.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+
 </body>
+
 </html>

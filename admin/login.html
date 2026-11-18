@@ -1,17 +1,45 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../index.html">
     <link rel="stylesheet" href="../style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
-    <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../favicon-180.png">
-    <title>Document</title>
+    <link rel="stylesheet" href="./admin.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Lato:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32.png">
+    <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../images/favicon-180.png">
+    <title>Login | FashionSpeaks</title>
 </head>
-<body>
-    
+
+<body class="auth-page">
+    <main class="auth-card">
+        <a href="../index.html" class="auth-logo">
+            <img src="../images/fs-logo-transparent.png" alt="FashionSpeaks logo">
+        </a>
+
+        <h1>Admin login</h1>
+        <p class="auth-sub">Sign in to manage your store.</p>
+
+        <form id="loginForm" class="auth-form">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" autocomplete="email" required>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" autocomplete="current-password" minlength="6" required>
+
+            <p class="form-message" id="formMessage" role="alert"></p>
+
+            <button type="submit" class="auth-btn">Log in</button>
+        </form>
+
+        <p class="auth-switch">New here? <a href="register.html">Create an account</a></p>
+        <a href="../index.html" class="auth-back">Back to store</a>
+    </main>
+
+
 </body>
+
 </html>
