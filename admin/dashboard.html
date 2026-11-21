@@ -14,7 +14,7 @@
     <title>Dashboard | FashionSpeaks</title>
 </head>
 
-<body>
+<body class="checking">
     <div class="admin-layout">
 
         <!-- LEFT SIDEBAR -->
@@ -27,6 +27,7 @@
             <nav class="sidebar-nav">
                 <a href="dashboard.html" class="active">Dashboard</a>
                 <a href="product.html">Products</a>
+                <a href="team.html" id="teamLink" hidden>Team</a>
                 <a href="../index.html">View store</a>
             </nav>
 
@@ -81,12 +82,13 @@
                                 <th>Product</th>
                                 <th>Category</th>
                                 <th>In stock</th>
+                                <th>Status</th>
                                 <th>Price</th>
                             </tr>
                         </thead>
                         <tbody id="lowStockBody">
                             <tr class="empty-row">
-                                <td colspan="4">No products yet. Add your first product to see it here.</td>
+                                <td colspan="5">No products yet. Add your first product to see it here.</td>
                             </tr>
                         </tbody>
                     </table>
@@ -96,7 +98,7 @@
         </main>
     </div>
 
-
+ <script type="module" src="../js/guard.js"></script>
 </body>
 
 </html>

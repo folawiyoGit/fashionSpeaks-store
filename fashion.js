@@ -38,3 +38,26 @@ function hideCart() {
 openCart.addEventListener("click", showCart);
 closeCart.addEventListener("click", hideCart);
 overlay.addEventListener("click", hideCart);
+
+/* ---------- ROTATING WORDS ---------- */
+function rotateText(el, phrases, ms) {
+    if (!el) return;                         // do nothing on pages without it
+    let i = 0;
+    el.textContent = phrases[0];
+
+    setInterval(function () {
+        el.classList.add("swap");            // fade out
+        setTimeout(function () {
+            i = (i + 1) % phrases.length;    // next phrase, back to the first at the end
+            el.textContent = phrases[i];
+            el.classList.remove("swap");     // fade in
+        }, 600);
+    }, ms);
+}
+
+rotateText(document.getElementById("heroRotator"), [
+    "African fashion never stops speaking.",
+    "Recognized globally.",
+    "Celebrated beyond borders.",
+    "African fashion to the world."
+], 5000);

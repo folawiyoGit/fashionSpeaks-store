@@ -1,4 +1,14 @@
 /* ---------- LOGIN AND REGISTER ---------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body.checking {
+    visibility: hidden;
+}
+
 .auth-page {
     min-height: 100vh;
     display: flex;
@@ -491,6 +501,47 @@ button.primary-btn {
     gap: 12px;
 }
 
+.field-hint {
+    margin: -12px 0 18px;
+    font-size: 0.8rem;
+    color: var(--brown);
+}
+
+.size-fieldset {
+    border: none;
+    margin-bottom: 18px;
+}
+
+.size-fieldset legend {
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.size-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.product-form .size-options label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+    padding: 8px 12px;
+    border: 1px solid var(--brown);
+    background: #fff;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+.product-form .size-options input {
+    width: auto;
+    margin: 0;
+    padding: 0;
+}
+
 @media (max-width: 480px) {
     .form-row {
         grid-template-columns: 1fr;
@@ -525,6 +576,44 @@ button.primary-btn {
     .admin-main {
         padding: 24px 20px;
     }
+}
+
+/* ---------- TEAM PAGE ---------- */
+.panel+.panel {
+    margin-top: 24px;
+}
+
+.panel-note {
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+    color: var(--brown);
+}
+
+.inline-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.inline-form input {
+    flex: 1;
+    min-width: 200px;
+    padding: 10px 14px;
+    background: #fff;
+    color: var(--espresso);
+    border: 1px solid var(--brown);
+    font: inherit;
+}
+
+.inline-form input:focus {
+    outline: 2px solid var(--gold);
+    outline-offset: 1px;
+}
+
+.code-text {
+    font-family: Consolas, monospace;
+    letter-spacing: 1px;
 }
 
 

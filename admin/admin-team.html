@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="./admin.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Lato:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32.png">
+    <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../images/favicon-180.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin-team | FashionSpeaks</title>
+
+</head>
+
+<body class="checking">
+   <div class="admin-layout">
+
+        <!-- LEFT SIDEBAR -->
+        <aside class="sidebar">
+            <a href="../index.html" class="sidebar-brand">
+                <img src="../images/fs-logo-transparent.png" alt="FashionSpeaks logo">
+                <span>FashionSpeaks</span>
+            </a>
+
+            <nav class="sidebar-nav">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="product.html">Products</a>
+                <a href="admin-team.html" class="active">Team</a>
+                <a href="../index.html">View store</a>
+            </nav>
+
+            <button class="logout-btn" id="logoutBtn">Log out</button>
+        </aside>
+        <main class="admin-main">
+
+    <header class="admin-top">
+        <div>
+            <h1>Team</h1>
+            <p>Control who can manage the store.</p>
+        </div>
+    </header>
+
+    <section class="panel">
+        <div class="panel-head">
+            <h2>Invite codes</h2>
+        </div>
+        <p class="panel-note">Give a code to someone you trust. They enter it on the register page. A code works until you revoke it.</p>
+
+        <form class="inline-form" id="codeForm">
+            <input type="text" id="codeNote" placeholder="Who is this code for? e.g. Ade" aria-label="Who is this code for" required>
+            <button type="submit" class="primary-btn">Generate code</button>
+        </form>
+
+        <p class="form-message" id="teamMessage" role="alert"></p>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>For</th>
+                        <th>Created</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="codeTableBody">
+                    <tr class="empty-row">
+                        <td colspan="5">No codes yet. Generate one above.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="panel">
+        <div class="panel-head">
+            <h2>Admins</h2>
+        </div>
+        <p class="panel-note">Switching an admin off removes their access straight away, even if they still know their code.</p>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="adminTableBody">
+                    <tr class="empty-row">
+                        <td colspan="5">No admins to show yet.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+</main>
+
+   </div>
+   
+   <script type="module" src="../js/guard.js"></script>
+</body>
+
+</html>
