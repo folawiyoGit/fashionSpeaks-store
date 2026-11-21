@@ -21,6 +21,10 @@ onAuthStateChanged(auth, async function (user) {
         }
 
         const admin = snap.data();
+        if (document.body.dataset.ownerOnly === "true" && admin.role !== "owner") {
+            window.location.href = "dashboard.html";
+            return;
+        }
 
         const welcomeText = document.getElementById("welcomeText");
         if (welcomeText) welcomeText.textContent = "Welcome back, " + admin.name + ".";
