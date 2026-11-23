@@ -43,8 +43,12 @@
                     <h1>Products</h1>
                     <p>Add, edit and remove items in your store.</p>
                 </div>
-                <button type="button" class="primary-btn" id="openProductForm">Add product</button>
+                <div class="top-actions">
+                    <button type="button" class="secondary-btn" id="importBtn">Import from DummyJSON</button>
+                    <button type="button" class="primary-btn" id="openProductForm">Add product</button>
+                </div>
             </header>
+            <p class="form-message" id="importMessage" role="alert"></p>
 
             <!-- SEARCH AND FILTER -->
             <div class="admin-toolbar">
@@ -148,6 +152,11 @@
                 <label for="productDesc">Description</label>
                 <textarea id="productDesc" rows="4"></textarea>
 
+                <label class="check-row">
+                    <input type="checkbox" id="productFeatured">
+                    Show on the homepage Featured collection
+                </label>
+
                 <p class="form-message" id="formMessage" role="alert"></p>
 
                 <div class="form-actions">
@@ -162,7 +171,8 @@
 
     <script type="module" src="../js/guard.js"></script>
     <script type="module" src="../js/products.js"></script>
-   
+    <script type="module" src="../js/dummy-import.js"></script>
+
 </body>
 
 </html>

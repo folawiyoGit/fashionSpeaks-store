@@ -124,6 +124,8 @@ function openForm(product) {
         document.getElementById("productColors").value = (product.colors || []).join(", ");
         document.getElementById("productImage").value = product.image || "";
         document.getElementById("productDesc").value = product.description || "";
+        document.getElementById("productFeatured").checked = product.featured === true;
+
 
         document.querySelectorAll("input[name='sizes']").forEach(function (box) {
             box.checked = (product.sizes || []).includes(box.value);
@@ -178,7 +180,8 @@ form.addEventListener("submit", async function (event) {
         colors: colors,
         sizes: sizes,
         image: document.getElementById("productImage").value.trim(),
-        description: document.getElementById("productDesc").value.trim()
+        description: document.getElementById("productDesc").value.trim(),
+        featured: document.getElementById("productFeatured").checked
     };
 
     // simple checks before saving
