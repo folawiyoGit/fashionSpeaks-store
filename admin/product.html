@@ -60,6 +60,12 @@
                     <option value="men">Men</option>
                     <option value="accessories">Accessories</option>
                 </select>
+                <select id="adminStatusFilter" aria-label="Filter by stock status">
+                    <option value="all">All stock levels</option>
+                    <option value="in">In stock</option>
+                    <option value="low">Low stock</option>
+                    <option value="out">Out of stock</option>
+                </select>
             </div>
 
             <!-- PRODUCT TABLE -->
@@ -164,6 +170,24 @@
                     <button type="submit" class="primary-btn">Save product</button>
                 </div>
             </form>
+
+        </div>
+    </div>
+    <!-- VIEW POP-UP (details of one product) -->
+    <div class="modal" id="viewModal">
+        <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="viewTitle">
+
+            <div class="modal-head">
+                <h2 id="viewTitle">Product details</h2>
+                <button type="button" id="closeView" aria-label="Close details">&times;</button>
+            </div>
+
+            <div id="viewBody"></div>
+
+            <div class="form-actions">
+                <a href="#" class="secondary-btn" id="viewStoreLink" target="_blank" rel="noopener">View on store</a>
+                <button type="button" class="primary-btn" id="viewEditBtn">Edit product</button>
+            </div>
 
         </div>
     </div>

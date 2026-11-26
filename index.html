@@ -10,7 +10,7 @@
         rel="stylesheet">
     <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32.png">
     <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="./images/favicon-180.png">
-    <title>FashionSpeaks| Fashion Speaks louder than sound</title>
+    <title>FashionSpeaks | Fashion Speaks louder than sound</title>
 </head>
 
 <body>
@@ -40,6 +40,8 @@
             <a href="shop.html" class="hero-btn">Shop the collection</a>
         </div>
         <div class="welcome" id="welcome">
+            <button type="button" class="welcome-close" id="welcomeClose"
+                aria-label="Close welcome message">&times;</button>
             <img src="./images/fs-logo-transparent.png" alt="FashionSpeaks Logo" class="welcome-logo">
             <h2>Welcome</h2>
             <p>Discover timeless pieces, made to be remembered.</p>
@@ -101,6 +103,50 @@
         </div>
     </section>
 
+    <!-- FASHION STORIES -->
+    <section class="stories" id="stories">
+        <div class="section-head">
+            <h2>Fashion stories and insights</h2>
+            <a href="about.html">Our story</a>
+        </div>
+        <p class="stories-intro">Every cloth has a language. Here is how to start reading it.</p>
+
+        <div class="story-grid">
+            <article class="story-card">
+                <div class="story-photo">
+                    <img src="./images/cat-women.jpg" alt="Woman in a ruffled Ankara gown" loading="lazy">
+                </div>
+                <p class="story-tag">Prints and patterns</p>
+                <h3>Reading the language of Ankara</h3>
+                <p>Bold wax prints are more than decoration. Many carry names, sayings and moods, so what you wear can
+                    say something without a word.</p>
+                <a href="shop.html?category=women" class="story-link">Shop the look</a>
+            </article>
+
+            <article class="story-card">
+                <div class="story-photo">
+                    <img src="./images/cat-men.jpg" alt="Man in an embroidered green agbada" loading="lazy">
+                </div>
+                <p class="story-tag">Ceremony and pride</p>
+                <h3>The agbada: dressing for the occasion</h3>
+                <p>Flowing robes, rich embroidery and a cap worn just so. Ceremonial menswear speaks of respect,
+                    celebration and belonging.</p>
+                <a href="shop.html?category=men" class="story-link">Shop the look</a>
+            </article>
+
+            <article class="story-card">
+                <div class="story-photo">
+                    <img src="./images/cat-accessories.jpg" alt="Leather bag decorated with cowrie shells"
+                        loading="lazy">
+                </div>
+                <p class="story-tag">Heritage in detail</p>
+                <h3>Cowries, beads and the stories they carry</h3>
+                <p>From cowrie shells to hand-strung beads, accessories have long marked heritage and status. A small
+                    piece can tell a long story.</p>
+                <a href="shop.html?category=accessories" class="story-link">Shop the look</a>
+            </article>
+        </div>
+    </section>
 
 
     <footer class="site-footer">
@@ -132,6 +178,7 @@
 
         <div class="footer-bottom">
             <p>&copy; 2026 FashionSpeaks. All rights reserved.</p>
+            <a href="#top" class="to-top">Back to top</a>
         </div>
     </footer>
 

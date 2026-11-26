@@ -19,6 +19,7 @@ const tableBody = document.getElementById("productTableBody");
 const resultCount = document.getElementById("adminResultCount");
 const searchInput = document.getElementById("adminSearch");
 const categoryFilter = document.getElementById("adminCategoryFilter");
+const statusFilter = document.getElementById("adminStatusFilter");
 
 const productsRef = collection(db, "products");   // points at the "products" collection
 let allProducts = [];                              // our copy of every product
@@ -62,16 +63,83 @@ async function loadProducts() {
         tableBody.innerHTML = '<tr class="empty-row"><td colspan="6">Could not load products. Please refresh.</td></tr>';
     }
 }
+/* ---------- quick quantity update ---------- */
+function showSaveButton(control) {
+    control.querySelector(".qty-save").hidden = false;
+}
+
+tableBody.addEventListener("click", async function (event) {
+    const button = event.target.closest("button[data-qty]");
+    if (!button) return;
+
+    const control = button.closest(".qty-control");
+    const input = control.querySelector(".qty-input");
+    const action = button.dataset.qty;
+
+    if (action === "plus") {
+        input.value = (Number(input.value) || 0) + 1;
+        showSaveButton(control);
+    }
+
+    if (action === "minus") {
+        input.value = Math.max(0, (Number(input.value) || 0) - 1);
+        showSaveButton(control);
+    }
+
+    if (action === "save") {
+        const newStock = Number(input.value);
+
+        if (!Number.isInteger(newStock) || newStock < 0) {
+            alert("Stock must be a whole number, 0 or more.");
+            return;
+        }
+
+        button.disabled = true;
+        button.textContent = "Saving...";
+
+        try {
+            await updateDoc(doc(db, "products", control.dataset.id), {
+                stock: newStock,
+                updatedAt: serverTimestamp()
+            });
+
+            const product = allProducts.find(function (item) { return item.id === control.dataset.id; });
+            product.stock = newStock;
+            renderTable();                       // redraws the row with the new status badge
+        } catch (error) {
+            console.log(error);
+            alert("Could not update the quantity. Check you are logged in as an active admin.");
+            button.disabled = false;
+            button.textContent = "Save";
+        }
+    }
+});
+
+// typing a number directly also shows the Save button
+tableBody.addEventListener("input", function (event) {
+    if (event.target.classList.contains("qty-input")) {
+        showSaveButton(event.target.closest(".qty-control"));
+    }
+});
 
 /* ---------- show the table (applies search + filter) ---------- */
 function renderTable() {
     const search = searchInput.value.trim().toLowerCase();
     const category = categoryFilter.value;
 
+    const wantedStatus = statusFilter.value;
+
     const shown = allProducts.filter(function (product) {
+        const label = stockStatus(product.stock, product.alertLevel).label;
+
         const matchesName = product.name.toLowerCase().includes(search);
         const matchesCategory = category === "all" || product.category === category;
-        return matchesName && matchesCategory;
+        const matchesStatus = wantedStatus === "all"
+            || (wantedStatus === "in" && label === "In stock")
+            || (wantedStatus === "low" && label === "Low stock")
+            || (wantedStatus === "out" && label === "Out of stock");
+
+        return matchesName && matchesCategory && matchesStatus;
     });
 
     resultCount.textContent = shown.length + (shown.length === 1 ? " product" : " products");
@@ -97,11 +165,20 @@ function renderTable() {
                 <td>${escapeHtml(product.name)}</td>
                 <td>${escapeHtml(capitalize(product.category))}</td>
                 <td>$${Number(product.price).toFixed(2)}</td>
-                <td>${product.stock} <span class="badge ${status.css}">${status.label}</span></td>
                 <td>
-                    <button type="button" class="edit-btn" data-id="${product.id}">Edit</button>
-                    <button type="button" class="delete-btn" data-id="${product.id}">Delete</button>
-                </td>
+    <div class="qty-control" data-id="${product.id}">
+        <button type="button" class="qty-btn" data-qty="minus" aria-label="One less">-</button>
+        <input type="number" class="qty-input" min="0" step="1" value="${product.stock}" aria-label="Stock quantity">
+        <button type="button" class="qty-btn" data-qty="plus" aria-label="One more">+</button>
+        <button type="button" class="qty-save" data-qty="save" hidden>Save</button>
+    </div>
+    <span class="badge ${status.css}">${status.label}</span>
+</td>
+                <td>
+    <button type="button" class="view-btn" data-id="${product.id}">View</button>
+    <button type="button" class="edit-btn" data-id="${product.id}">Edit</button>
+    <button type="button" class="delete-btn" data-id="${product.id}">Delete</button>
+</td>
             </tr>`;
     }).join("");
 }
@@ -154,6 +231,68 @@ document.addEventListener("keydown", function (event) {
     if (event.key === "Escape") closeForm();
 });
 
+/* ---------- view one product ---------- */
+const viewModal = document.getElementById("viewModal");
+const viewBody = document.getElementById("viewBody");
+let viewing = null;                                   // the product being viewed
+
+function formatDate(timestamp) {
+    return timestamp && timestamp.toDate ? timestamp.toDate().toLocaleDateString() : "Not recorded";
+}
+
+function listText(items) {
+    return items && items.length ? items.map(escapeHtml).join(", ") : "None";
+}
+
+function openView(product) {
+    viewing = product;
+    const status = stockStatus(product.stock, product.alertLevel);
+
+    const picture = product.image && product.image.startsWith("http")
+        ? '<img class="view-image" src="' + escapeHtml(product.image) + '" alt="' + escapeHtml(product.name) + '">'
+        : '<div class="view-image"></div>';
+
+    viewBody.innerHTML = `
+        ${picture}
+        <h3>${escapeHtml(product.name)}</h3>
+        <p class="view-price">$${product.price.toFixed(2)}</p>
+
+        <dl class="view-list">
+            <dt>Category</dt><dd>${escapeHtml(capitalize(product.category))}</dd>
+            <dt>In stock</dt><dd>${product.stock} <span class="badge ${status.css}">${status.label}</span></dd>
+            <dt>Alert level</dt><dd>${product.alertLevel}</dd>
+            <dt>Sizes</dt><dd>${listText(product.sizes)}</dd>
+            <dt>Colours</dt><dd>${listText(product.colors)}</dd>
+            <dt>Featured</dt><dd>${product.featured ? "Yes" : "No"}</dd>
+            <dt>Added</dt><dd>${formatDate(product.createdAt)}</dd>
+            <dt>Last updated</dt><dd>${formatDate(product.updatedAt)}</dd>
+            <dt>Product ID</dt><dd class="code-text">${escapeHtml(product.id)}</dd>
+        </dl>
+
+        <p class="view-desc">${escapeHtml(product.description || "No description.")}</p>`;
+
+    document.getElementById("viewStoreLink").href = "../product-details.html?id=" + encodeURIComponent(product.id);
+    viewModal.classList.add("open");
+}
+
+function closeView() {
+    viewModal.classList.remove("open");
+}
+
+document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") { closeForm(); closeView(); }
+});
+
+document.getElementById("closeView").addEventListener("click", closeView);
+
+viewModal.addEventListener("click", function (event) {
+    if (event.target === viewModal) closeView();      // clicking the dark area
+});
+
+document.getElementById("viewEditBtn").addEventListener("click", function () {
+    closeView();
+    openForm(viewing);                                // jump straight to editing this product
+});
 /* ---------- save (add or edit) ---------- */
 form.addEventListener("submit", async function (event) {
     event.preventDefault();
@@ -220,6 +359,10 @@ tableBody.addEventListener("click", async function (event) {
     const product = allProducts.find(function (item) { return item.id === id; });
     if (!product) return;
 
+    if (button.classList.contains("view-btn")) {
+        openView(product);
+    }
+
     if (button.classList.contains("edit-btn")) {
         openForm(product);
     }
@@ -241,6 +384,10 @@ tableBody.addEventListener("click", async function (event) {
 /* ---------- search and filter ---------- */
 searchInput.addEventListener("input", renderTable);
 categoryFilter.addEventListener("change", renderTable);
+statusFilter.addEventListener("change", renderTable);
+
+// the API panel tells us when it has added products
+window.addEventListener("inventory-changed", loadProducts);
 
 /* ---------- start ---------- */
 loadProducts();

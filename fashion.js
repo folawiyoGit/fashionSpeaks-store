@@ -2,21 +2,35 @@
 let welcome = document.getElementById("welcome");
 let waitTime = 10000;    // 10 seconds
 
-if (welcome) {                                   // only run if this page has a welcome box
+if (welcome) {
+    const closeBtn = document.getElementById("welcomeClose");
+    let fadeTimer = null;
+
+    // fades the message away; "quick" is used when the visitor closes it by hand
+    const hideWelcome = function (quick) {
+        clearTimeout(fadeTimer);                          // stop the 10-second countdown
+        if (quick === true) welcome.classList.add("fast");
+        welcome.classList.add("fade-out");
+
+        setTimeout(function () {
+            welcome.classList.add("gone");
+        }, quick === true ? 300 : 1500);
+    };
+
     if (sessionStorage.getItem("welcomeSeen")) {
         welcome.classList.add("gone");
     } else {
         sessionStorage.setItem("welcomeSeen", "yes");
-
-        setTimeout(function () {
-            welcome.classList.add("fade-out");
-
-            setTimeout(function () {
-                welcome.classList.add("gone");
-            }, 1500);
-
-        }, waitTime);
+        fadeTimer = setTimeout(hideWelcome, waitTime);    // close by itself after 10 seconds
     }
+
+    if (closeBtn) {
+        closeBtn.addEventListener("click", function () { hideWelcome(true); });
+    }
+
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") hideWelcome(true);
+    });
 }
 
 /* ---------- CART DRAWER (open and close only, for now) ---------- */
